@@ -1,0 +1,14 @@
+{
+  "name": "yap-to-product",
+  "description": "From brainstorm to buildable plan: phased backlog, guided setup, cost-aware building.",
+  "owner": {
+    "name": "Armitanemati"
+  },
+  "plugins": [
+    {
+      "name": "yap-to-product",
+      "source": "./plugins/yap-to-product",
+      "description": "Turn a brainstormed idea into a phased Jira backlog with guided setup, vibe analysis, legal and security epics, and Sonnet for debugging."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "yap-to-product",
+  "version": "0.2.0",
+  "description": "Turn a brainstormed idea into a phased Jira backlog with guided setup, vibe analysis, legal and security epics, and Sonnet for debugging.",
+  "license": "MIT"
+}
