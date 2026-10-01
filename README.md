@@ -4,6 +4,8 @@ From brainstorm to buildable plan. A Claude plugin that takes over when you stop
 
 It sets up your workspace and task tracker with you, learns your taste from inspiration images, sorts your ideas into a phased plan, covers legal and security basics for where you operate, walks you through the setup only you can do one numbered step at a time, and reports progress ticket by ticket.
 
+![Yap to Product: from brainstorm to buildable plan in nine steps](docs/flow.png)
+
 ## How it works
 
 1. **You brainstorm** however you like, with Claude or another brainstorming skill.
@@ -19,6 +21,53 @@ It sets up your workspace and task tracker with you, learns your taste from insp
 8. **Launch basics:** domain, HTTPS, an optional staging site at `test.yourdomain.com`, and go-live, each with a guided walkthrough.
 9. **Build by ticket key.** Say "start AR-1" and it works on that ticket, then reports its stage: in progress, built but not deployed, on staging and needs QA, in production, or blocked.
 10. **Debug cheaper.** Debugging, testing, and QA run on Sonnet. If you say it is debugging, it switches without asking; if it only looks like debugging, it asks once.
+
+## Detailed flow
+
+```mermaid
+flowchart TD
+    A(["You brainstorm freely, with Claude or any brainstorming skill"]) --> B{{"You say: I want to build this"}}
+
+    subgraph SETUP ["1. Set up"]
+        B --> C{"Where are you working?"}
+        C -->|"Claude chat app"| C1["Handoff summary + 3 steps to open Claude Code on the same topic"]
+        C -->|"Claude Code, no project"| C2["Create project folder, private GitHub repo, memory files"]
+        C -->|"Claude Code, in a project"| C3["Read project memory, skip what is already decided"]
+        C1 --> D
+        C2 --> D
+        C3 --> D
+        D["Optional: phone access (Remote Control or cloud session)"] --> E["Tracker setup: Jira, page opened for you, 5 numbered steps at a time"]
+        E --> F["Discovery questions, each with a plain example"]
+        F --> G["Vibe: 3 to 10 inspiration images, 3+ patterns confirmed, design terms explained"]
+    end
+
+    subgraph PLAN ["2. Plan"]
+        G --> H{"Sort every idea"}
+        H -->|"Needed for version 1"| H1["MVP: To Do, detailed tasks"]
+        H -->|"Vague or can wait"| H2["For Future: short parked epics"]
+        H -->|"Growth groundwork"| H3["Scalability: start-when triggers + copy-paste prompts"]
+        H1 --> I
+        H2 --> I
+        H3 --> I
+        I["Legal and Security epics for where you and your users are"] --> J["Launch basics: domain, HTTPS, test.yourdomain.com, go live"]
+        J --> K["Preview: you approve, then tickets are created"]
+    end
+
+    subgraph BUILD ["3. Build"]
+        K --> L["You: start AR-1"]
+        L --> M{"Debugging, testing or QA?"}
+        M -->|"You said so"| M1["Switch to Sonnet"]
+        M -->|"Looks like it"| M2["Ask once: Sonnet or stay?"]
+        M -->|"No"| M3["Stay on current model"]
+        M1 --> N
+        M2 --> N
+        M3 --> N
+        N["Report by key: built / on staging, needs QA / in production / blocked"] --> O["You test and move it to Done"]
+    end
+
+    O -.->|"New idea later"| P["Update the existing epic and project memory"]
+    P -.-> H
+```
 
 ## How it talks to you
 
@@ -89,6 +138,7 @@ plugins/yap-to-product/
     references/legal-security.md       location-based Legal and Security epics
     references/guided-setup.md         step-by-step setup guides with links
     references/scalability.md          scalability tasks and prompts
+docs/flow.png                          overview diagram
 ```
 
 ## Limitations
